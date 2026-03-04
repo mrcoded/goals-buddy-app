@@ -7,6 +7,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Footer from "@/components/shared/footer/page";
 import QueryProvider from "@/provider/query-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const outfitFont = Outfit({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default async function RootLayout({
             {children}
             <Footer />
           </QueryProvider>
+          <Toaster position="top-right" />
         </body>
       </html>
     </ClerkProvider>
