@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 
-import Header from "@/components/shared/header/page";
 import { ClerkProvider } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
-import Footer from "@/components/shared/footer/page";
 import QueryProvider from "@/provider/query-provider";
+
+import Footer from "@/components/shared/footer/page";
+import Header from "@/components/shared/header/page";
 import { Toaster } from "@/components/ui/sonner";
 
 const outfitFont = Outfit({

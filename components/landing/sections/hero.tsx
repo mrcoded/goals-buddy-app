@@ -39,7 +39,7 @@ const HeroSection = () => {
                   className="link-button hero-button-outline group"
                   size="lg"
                 >
-                  <span className="hero-button-content">
+                  <span className="flex gap-2 items-center">
                     <RocketIcon className="hero-button-icon-primary group-hover:rotate-12 group-hover:text-primary" />{" "}
                     Get Started for Free
                   </span>
@@ -58,7 +58,7 @@ const HeroSection = () => {
                   className="link-button hero-button-outline group"
                   size="lg"
                 >
-                  <span className="hero-button-content">
+                  <span className="flex gap-2 items-center">
                     <ZapIcon className="hero-button-icon-primary group-hover:scale-125 group-hover:rotate-12" />
                     Buy a Plan
                   </span>
