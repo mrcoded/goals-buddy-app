@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PlusIcon } from "lucide-react";
+import { LockIcon, PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,8 +9,10 @@ import { useCreateLearningGoal } from "@/hooks/use-goals";
 
 const AddLearningGoal = ({
   selectedCommunityId,
+  showLockIcon,
 }: {
   selectedCommunityId: string;
+  showLockIcon: boolean;
 }) => {
   const { mutateAsync: createLearningGoal, isPending } =
     useCreateLearningGoal();
@@ -49,7 +51,7 @@ const AddLearningGoal = ({
               className="w-auto"
               size="sm"
               onClick={handleCreateGoal}
-              disabled={isPending}
+              disabled={isPending || showLockIcon || newGoal.length === 0}
             >
               Add Goal
             </Button>
@@ -67,8 +69,12 @@ const AddLearningGoal = ({
         <Button
           className="w-full"
           variant="outline"
+          disabled={showLockIcon}
           onClick={() => setShowTextArea(true)}
         >
+          {showLockIcon && (
+            <LockIcon className="size-4 teext-muted-foreground" />
+          )}
           <PlusIcon className="size-3" /> Add Learning Goal
         </Button>
       )}
