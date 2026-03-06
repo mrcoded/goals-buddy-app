@@ -1,5 +1,6 @@
 import { client } from "@/lib/api-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export const useCreateLearningGoal = () => {
   const queryClient = useQueryClient();
@@ -30,8 +31,10 @@ export const useCreateLearningGoal = () => {
       queryClient.invalidateQueries({
         queryKey: ["learning-goals", variables.communityId],
       });
+      toast.success("Learning Goals Successfully Added");
     },
     onError(error) {
+      toast.error("Failed to add Learning Goals! Try again");
       console.error("Error creating learning goal", error);
     },
   });
