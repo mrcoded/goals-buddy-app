@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { MessageCircleIcon, User2Icon } from "lucide-react";
+import { MessageCircleIcon, MessageSquare } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/ui/user-avatar";
@@ -28,7 +28,7 @@ const ConversationListsCard = ({
           </CardTitle>
           <Link href="/chat">
             <Button variant="outline" size="sm">
-              <User2Icon className="size-4" /> View all
+              <MessageSquare className="size-4" /> View all
             </Button>
           </Link>
         </div>
@@ -40,7 +40,7 @@ const ConversationListsCard = ({
           {matches?.slice(0, 4)?.map((match) => {
             return (
               <Link href={`/chat/${match.id}`} key={match.id}>
-                <Card className="shadow-none">
+                <Card className="shadow-none p-3">
                   <CardHeader>
                     <div className="flex items-center gap-4">
                       <UserAvatar

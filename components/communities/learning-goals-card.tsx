@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import { BotIcon } from "lucide-react";
+import Loading from "@/app/loading";
+
+import { useCommunityGoals } from "@/hooks/use-communities";
 
 import AiMatching from "./ai-matching";
 import AddLearningGoal from "./add-learning-goal";
-
 import {
   Card,
   CardContent,
@@ -14,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useCommunityGoals } from "@/hooks/use-communities";
+import ApiErrorState from "@/components/api-error";
 
 const LearningGoalsCard = ({
   showLockIcon,
@@ -27,31 +28,29 @@ const LearningGoalsCard = ({
     "goals",
   );
 
+  //get all learning goals
   const {
     data: communityGoals,
     isLoading: isLoadingCommunityGoals,
     error: errorCommunityGoals,
   } = useCommunityGoals(selectedCommunity);
 
-  if (isLoadingCommunityGoals) return <div>Loading...</div>;
-  if (errorCommunityGoals) return <div>User Community Error</div>;
-
   return (
     <Card className="lg:col-span-2 ">
       <CardHeader>
         <div className="flex gap-2 mb-4">
           <Button
+            size="sm"
             onClick={() => setActiveTab("goals")}
             variant={activeTab === "goals" ? "default" : "outline"}
           >
             My Goals
           </Button>
           <Button
+            size="sm"
             onClick={() => setActiveTab("matches")}
-            // disabled={showLockIcon}
             variant={activeTab === "matches" ? "default" : "outline"}
           >
-            <BotIcon className="size-4" />
             Find Buddies with AI
           </Button>
         </div>
@@ -61,34 +60,42 @@ const LearningGoalsCard = ({
         <CardDescription>
           {activeTab === "goals"
             ? `${communityGoals?.length ?? 0} ${communityGoals?.length === 1 ? "goal" : "goals"} 
-                 in this community`
+                in this community`
             : "Members with similar learning goals"}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        {activeTab === "goals" ? (
-          <div className="space-y-2">
-            {communityGoals?.map((goal) => (
-              <Card key={goal.id} className="cursor-pointer shadow-none">
-                <CardHeader>
-                  <CardTitle>{goal.title}</CardTitle>
-                  <CardDescription>{goal.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-            <AddLearningGoal
+      {isLoadingCommunityGoals ? (
+        <Loading />
+      ) : errorCommunityGoals ? (
+        <ApiErrorState />
+      ) : (
+        <CardContent>
+          {activeTab === "goals" ? (
+            <div className="space-y-2">
+              <div className="grid sm:grid-cols-2 gap-2">
+                {communityGoals?.map((goal) => (
+                  <Card key={goal.id} className="cursor-pointer shadow-none">
+                    <CardHeader>
+                      <CardTitle>{goal.title}</CardTitle>
+                      <CardDescription>{goal.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+              <AddLearningGoal
+                showLockIcon={showLockIcon}
+                selectedCommunityId={selectedCommunity!}
+              />
+            </div>
+          ) : (
+            <AiMatching
               showLockIcon={showLockIcon}
+              totalGoals={communityGoals?.length || 0}
               selectedCommunityId={selectedCommunity!}
             />
-          </div>
-        ) : (
-          <AiMatching
-            showLockIcon={showLockIcon}
-            totalGoals={communityGoals?.length || 0}
-            selectedCommunityId={selectedCommunity!}
-          />
-        )}
-      </CardContent>
+          )}
+        </CardContent>
+      )}
     </Card>
   );
 };

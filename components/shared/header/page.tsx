@@ -1,25 +1,21 @@
 "use client";
 
 import Link from "next/link";
-
-import {
-  // SignInButton,
-  // SignUpButton,
-  // SignedIn,
-  // SignedOut,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { MessageCircleIcon, TrophyIcon, UserIcon } from "lucide-react";
 
+import { UserButton, useUser } from "@clerk/nextjs";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import SidebarNav from "@/components/shared/sidebar";
+
 const Header = ({ isPro }: { isPro: boolean }) => {
-  const { isSignedIn } = useUser();
+  const { user, isSignedIn } = useUser();
 
   return (
     <header>
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-4 border-b">
+        <SidebarNav user={user} />
         <div className="flex items-center gap-6">
           <Link href="/" className="font-bold text-xl space-x-2">
             GoalsBuddy

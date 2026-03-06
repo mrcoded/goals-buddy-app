@@ -1,7 +1,6 @@
 "use client";
 
 import React, { startTransition, useEffect } from "react";
-import Loading from "@/app/loading";
 
 import { useCurrentUser } from "@/hooks/use-users";
 import { useCommunities } from "@/hooks/use-communities";
@@ -33,8 +32,6 @@ const CommunityPage = () => {
     }
   }, [userCommunities, selectedCommunity]);
 
-  if (isLoadingUserCommunities) return <Loading />;
-
   // get number of communities by the current user
   const numberOfCommunity = userCommunities?.length ?? 0;
   const showLockIcon = numberOfCommunity >= 3 && !isPro;
@@ -48,6 +45,7 @@ const CommunityPage = () => {
           {/* show user joined communities card */}
           <JoinedCommunityCard
             showLockIcon={showLockIcon}
+            isLoadingUserCommunities={isLoadingUserCommunities}
             userCommunities={userCommunities ?? []}
             selectedCommunity={selectedCommunity ?? ""}
             setSelectedCommunity={setSelectedCommunity}

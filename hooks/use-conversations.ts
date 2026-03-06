@@ -89,8 +89,7 @@ export const useSendMessage = () => {
 
       return res.json();
     },
-    onSuccess: (data, variables) => {
-      console.log(data, variables);
+    onSuccess: (_, variables) => {
       toast.success("Message sent");
       queryClient.invalidateQueries({
         queryKey: ["messages", variables.conversationId],

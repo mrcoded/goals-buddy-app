@@ -2,22 +2,18 @@
 
 import React from "react";
 
-import UserAvatar from "@/components/ui/user-avatar";
+import { PendingMatchProps } from "@/types/matches.types";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import UserAvatar from "@/components/ui/user-avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MatchProps } from "@/types/matches.types";
 
 const PendingMatchesCard = ({
   acceptMatch,
   pendingMatchesToShow,
   acceptMatchPending,
-}: {
-  acceptMatch: any;
-  pendingMatchesToShow: MatchProps[];
-  acceptMatchPending: boolean;
-}) => {
+}: PendingMatchProps) => {
   return (
     <div className="flex gap-4 overflow-x-scroll">
       {pendingMatchesToShow?.map((match) => {

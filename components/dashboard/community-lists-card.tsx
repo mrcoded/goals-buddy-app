@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { UserIcon } from "lucide-react";
+import { UserIcon, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,7 +27,7 @@ const CommunityListsCard = ({
           </CardTitle>
           <Link href="/communities">
             <Button variant="outline" size="sm">
-              Manage
+              <Users className="size-4" /> Manage
             </Button>
           </Link>
         </div>
@@ -38,14 +38,10 @@ const CommunityListsCard = ({
           {userCommunities?.slice(0, 4)?.map((c) => {
             return (
               <Card className="shadow-none" key={c.community?.id}>
-                <Link href={`/communities/c/${c.community?.id}`}>
-                  <CardHeader className="text-sm">
-                    <CardTitle>{c.community?.name}</CardTitle>
-                    <CardDescription>
-                      {c.community?.description}
-                    </CardDescription>
-                  </CardHeader>
-                </Link>
+                <CardHeader className="text-sm">
+                  <CardTitle>{c.community?.name}</CardTitle>
+                  <CardDescription>{c.community?.description}</CardDescription>
+                </CardHeader>
               </Card>
             );
           })}

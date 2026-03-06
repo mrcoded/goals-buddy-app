@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "@/app/loading";
 import { LockIcon } from "lucide-react";
 
 import {
@@ -17,6 +18,7 @@ const JoinedCommunityCard = ({
   userCommunities,
   selectedCommunity,
   setSelectedCommunity,
+  isLoadingUserCommunities,
 }: JoinedCommunityCardProps) => {
   return (
     <Card className="lg:col-span-1">
@@ -29,22 +31,26 @@ const JoinedCommunityCard = ({
         </CardTitle>
         <CardDescription>{userCommunities?.length} joined</CardDescription>{" "}
       </CardHeader>
-      <CardContent className="space-y-2">
-        {userCommunities?.map((c) => {
-          return (
-            <Button
-              key={c.community.id}
-              className="w-full justify-start"
-              onClick={() => setSelectedCommunity(c.community.id)}
-              variant={
-                selectedCommunity === c.community.id ? "default" : "outline"
-              }
-            >
-              {c.community.name}
-            </Button>
-          );
-        })}
-      </CardContent>
+      {isLoadingUserCommunities ? (
+        <Loading />
+      ) : (
+        <CardContent className="space-y-2">
+          {userCommunities?.map((c, idx) => {
+            return (
+              <Button
+                key={idx}
+                className="w-full justify-start"
+                onClick={() => setSelectedCommunity(c.community.id)}
+                variant={
+                  selectedCommunity === c.community.id ? "default" : "outline"
+                }
+              >
+                {c.community.name}
+              </Button>
+            );
+          })}
+        </CardContent>
+      )}
     </Card>
   );
 };

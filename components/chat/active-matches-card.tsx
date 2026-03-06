@@ -25,11 +25,15 @@ const ActiveMatchesCard: React.FC<{ acceptedMatches: MatchProps[] }> = ({
         return (
           <Card
             key={match.id}
-            className="flex w-full py-3 sm:p-y-6 cursor-pointer hover:bg-accent transition-colors duration-200"
+            className="flex w-full py-0 sm:py-1.5 cursor-pointer hover:bg-accent transition-colors duration-200"
             onClick={() => router.push(`/chat/${match.id}`)}
           >
             <CardContent className="flex items-center gap-4 p-4">
-              <UserAvatar imageUrl={buddy.imageUrl} name={buddy.name} />
+              <UserAvatar
+                size="sm"
+                imageUrl={buddy.imageUrl}
+                name={buddy.name}
+              />
               <div className="flex-1">
                 <CardTitle className="text-lg truncate capitalize">
                   {buddy.name}
