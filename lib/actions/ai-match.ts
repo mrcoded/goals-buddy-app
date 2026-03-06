@@ -140,7 +140,7 @@ export const aiMatchUsers = async (
 
     try {
       matchIndices = JSON.parse(jsonText);
-      console.log(matchIndices);
+
       if (!Array.isArray(matchIndices)) {
         console.warn("Invalid JSON format returned by AI");
         matchIndices = [];
@@ -151,7 +151,7 @@ export const aiMatchUsers = async (
       if (arrayMatch) {
         try {
           matchIndices = JSON.parse(arrayMatch[0]);
-          console.log("Extracted response array", matchIndices);
+          // console.log("Extracted response array", matchIndices);
         } catch (error) {
           console.warn("Invalid array format in AI response", arrayMatch[0]);
           matchIndices = [];

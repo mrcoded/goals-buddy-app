@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 import SidebarNav from "@/components/shared/sidebar";
 
 const Header = ({ isPro }: { isPro: boolean }) => {
-  const { user, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
 
   return (
     <header>
       <div className="flex items-center justify-between p-4 border-b">
-        <SidebarNav user={user} />
+        <SidebarNav />
         <div className="flex items-center gap-6">
           <Link href="/" className="font-bold text-xl space-x-2">
             GoalsBuddy
