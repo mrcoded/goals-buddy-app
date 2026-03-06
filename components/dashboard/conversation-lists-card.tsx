@@ -32,7 +32,7 @@ const ConversationListsCard = ({
             </Button>
           </Link>
         </div>
-        <CardDescription>Conversations you&apros;re part of</CardDescription>
+        <CardDescription>Conversations you&#39;re part of</CardDescription>
       </CardHeader>
 
       <CardContent>

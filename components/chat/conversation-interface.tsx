@@ -46,9 +46,6 @@ const ConversationInterface = ({
     error: errorMessages,
   } = useConversations(matchedConversations?.id || "");
 
-  //loading spinner
-  if (isLoadingMatches || isLoadingMessages) return <Loading />;
-
   //api errors
   const apiError = errorMessages?.message || errorMatches?.message;
 
@@ -71,7 +68,7 @@ const ConversationInterface = ({
 
   // handle send message function
   const handleSendMessage = async (message: string) => {
-    if (!matchedConversations?.id) {
+    if (!matchedConversations?.id || !message) {
       return;
     }
 
@@ -95,55 +92,59 @@ const ConversationInterface = ({
             </div>
           </CardHeader>
 
-          <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message) => {
-              //check if message sender is current user
-              const isCurrentUser =
-                message.senderId === matchedConversations?.currentUserId;
+          {isLoadingMatches || isLoadingMessages ? (
+            <Loading />
+          ) : (
+            <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+              {messages.map((message) => {
+                //check if message sender is current user
+                const isCurrentUser =
+                  message.senderId === matchedConversations?.currentUserId;
 
-              return (
-                <div className="space-y-4" key={message.id}>
-                  <div
-                    className={cn(
-                      "flex items-center gap-3",
-                      isCurrentUser ? "justify-end" : "justify-start",
-                    )}
-                  >
-                    {!isCurrentUser && (
-                      <UserAvatar
-                        size="xs"
-                        name={otherUser.name}
-                        imageUrl={otherUser?.imageUrl}
-                      />
-                    )}
-
+                return (
+                  <div className="space-y-4" key={message.id}>
                     <div
                       className={cn(
-                        "w-full sm:max-w-[70%] rounded-lg px-3 pt-2 sm:p-3",
-                        isCurrentUser
-                          ? "bg-primary/10 text-primary-foreground"
-                          : "bg-muted",
+                        "flex items-center gap-3",
+                        isCurrentUser ? "justify-end" : "justify-start",
                       )}
                     >
-                      <p className="text-wrap text-sm text-foreground mb-1 sm:mb-1.5">
-                        {message.content}
-                      </p>
-                      <p className="text-xs opacity-70 text-foreground mb-1">
-                        {new Date(message.createdAt).toLocaleDateString()}
-                      </p>
+                      {!isCurrentUser && (
+                        <UserAvatar
+                          size="xs"
+                          name={otherUser.name}
+                          imageUrl={otherUser?.imageUrl}
+                        />
+                      )}
+
+                      <div
+                        className={cn(
+                          "w-full sm:max-w-[70%] rounded-lg px-3 pt-2 sm:p-3",
+                          isCurrentUser
+                            ? "bg-primary/10 text-primary-foreground"
+                            : "bg-muted",
+                        )}
+                      >
+                        <p className="text-wrap text-sm text-foreground mb-1 sm:mb-1.5">
+                          {message.content}
+                        </p>
+                        <p className="text-xs opacity-70 text-foreground mb-1">
+                          {new Date(message.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      {isCurrentUser && (
+                        <UserAvatar
+                          size="xs"
+                          name={currentUser.name ?? "You"}
+                          imageUrl={currentUser.imageUrl ?? undefined}
+                        />
+                      )}
                     </div>
-                    {isCurrentUser && (
-                      <UserAvatar
-                        size="xs"
-                        name={currentUser.name ?? "You"}
-                        imageUrl={currentUser.imageUrl ?? undefined}
-                      />
-                    )}
                   </div>
-                </div>
-              );
-            })}
-          </CardContent>
+                );
+              })}
+            </CardContent>
+          )}
           <CardFooter className="border-t p-4">
             <div className="flex w-full gap-2 items-center">
               <Textarea

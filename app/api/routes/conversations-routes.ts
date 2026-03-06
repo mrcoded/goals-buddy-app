@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 
 import db from "@/config/db";
-import { desc, eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 
 import { authMiddleware } from "./auth-middleware";
 import { conversations, messages } from "@/config/schema";
@@ -29,7 +29,7 @@ const conversationsRoutes = new Hono<{ Variables: Variables }>()
       .select()
       .from(messages)
       .where(eq(messages.conversationId, converstionId))
-      .orderBy(desc(messages.createdAt));
+      .orderBy(asc(messages.createdAt));
 
     return c.json(messagesData);
   })

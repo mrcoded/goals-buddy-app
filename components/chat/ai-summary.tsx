@@ -34,9 +34,14 @@ const AIConversationSummary = ({
               disabled={generatingSummaryPending}
               onClick={() => handleConversationSummary(conversationId || "")}
             >
-              Generate
+              {summary && summary?.summary?.length > 0
+                ? "Regenerate"
+                : "Generate"}
             </Button>
           </div>
+          {summary && summary?.summary?.length > 0 && (
+            <p className="">Last generated summary:</p>
+          )}
         </CardHeader>
         {generatingSummaryPending ? (
           <div className="min-h-40 mb-4 translate-y-1/2">
