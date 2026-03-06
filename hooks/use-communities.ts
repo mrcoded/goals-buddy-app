@@ -30,7 +30,7 @@ export const useAllCommunities = () => {
 
 export const useCommunityGoals = (communityId: string | null) => {
   return useQuery({
-    queryKey: ["community-goals", communityId],
+    queryKey: ["learning-goals", communityId],
     queryFn: async () => {
       const res = await client.api.communities.c[":communityId"].goals.$get({
         param: {

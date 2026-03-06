@@ -1,12 +1,10 @@
 import React from "react";
-import { toast } from "sonner";
 import { BotIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { AIMatchingProps } from "@/types/ai-actions.types";
 
 import { useCreateAiMatches } from "@/hooks/use-ai-buddy";
-
-import { AIMatchingProps } from "@/types/ai-actions.types";
 
 const AiMatching = ({
   totalGoals,
@@ -14,16 +12,14 @@ const AiMatching = ({
   selectedCommunityId,
 }: AIMatchingProps) => {
   //create AI matches mutation
-  const aiMatches = useCreateAiMatches();
+  const { mutateAsync: aiMatches, isPending } = useCreateAiMatches();
 
   //handle find ai matches function
   const handleFindAiMatches = async () => {
     try {
-      await aiMatches.mutateAsync({ communityId: selectedCommunityId });
-      toast.success("AI matched learning buddies successfully");
+      await aiMatches({ communityId: selectedCommunityId });
     } catch (error) {
       console.log("Error matching ai partner", error);
-      toast.error("Uanable to match ai partner");
     }
   };
 
@@ -41,7 +37,7 @@ const AiMatching = ({
       </div>
       <Button
         size="lg"
-        disabled={totalGoals === 0 || showLockIcon}
+        disabled={totalGoals === 0 || isPending || showLockIcon}
         onClick={handleFindAiMatches}
       >
         <BotIcon className="size-4 text-center mr-2" /> Find Buddies with AI

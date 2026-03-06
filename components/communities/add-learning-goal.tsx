@@ -16,6 +16,7 @@ const AddLearningGoal = ({
 }) => {
   const { mutateAsync: createLearningGoal, isPending } =
     useCreateLearningGoal();
+
   const [newGoal, setNewGoal] = React.useState("");
   const [showTextArea, setShowTextArea] = React.useState(false);
 
@@ -73,7 +74,7 @@ const AddLearningGoal = ({
           onClick={() => setShowTextArea(true)}
         >
           {showLockIcon && (
-            <LockIcon className="size-4 teext-muted-foreground" />
+            <LockIcon className="size-4 text-muted-foreground" />
           )}
           <PlusIcon className="size-3" /> Add Learning Goal
         </Button>

@@ -1,14 +1,14 @@
 import { Hono } from "hono";
 import { authMiddleware } from "./auth-middleware";
 
-import { aiMatchUsers } from "@/lib/actions/ai-actions";
+import { aiMatchUsers } from "@/lib/actions/ai-match";
 import {
   findMatchesByUserId,
   getBuddiesUserId,
   getGoalsByUsersAndCommunity,
   getUserByIds,
   getUserMatches,
-} from "@/lib/query-helper";
+} from "@/lib/db-query-helper";
 import {
   communities,
   conversations,

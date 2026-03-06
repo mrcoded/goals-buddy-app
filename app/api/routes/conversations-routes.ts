@@ -8,10 +8,8 @@ import { desc, eq } from "drizzle-orm";
 
 import { authMiddleware } from "./auth-middleware";
 import { conversations, messages } from "@/config/schema";
-import {
-  generateAISummaries,
-  generateConversationSummary,
-} from "@/lib/actions/ai-actions";
+import { generateAISummaries } from "@/lib/actions/generate-ai-summary";
+import { generateConversationSummary } from "@/lib/actions/ai-conversation";
 
 interface Variables {
   userId: string;
