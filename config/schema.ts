@@ -99,40 +99,34 @@ export const conversationSummaries = pgTable("conversation_summaries", {
 });
 
 //Relations
-export const usersRelations = relations("users", ({ many }) => ({
+export const usersRelations = relations(users, ({ many }) => ({
   learningGoals: many(learningGoals),
   communityMembership: many(communityMembers),
   sentMessages: many(messages),
 }));
 
-export const communitiesRelations = relations(
-  "communities",
-  ({ one, many }) => ({
-    createdBy: one(users, {
-      fields: [communities.createdById],
-      references: [users.id],
-    }),
-    members: many(communityMembers),
-    learningGoals: many(learningGoals),
-    matches: many(matches),
+export const communitiesRelations = relations(communities, ({ one, many }) => ({
+  createdBy: one(users, {
+    fields: [communities.createdById],
+    references: [users.id],
   }),
-);
+  members: many(communityMembers),
+  learningGoals: many(learningGoals),
+  matches: many(matches),
+}));
 
-export const learningGoalsRelations = relations(
-  "learning_goals",
-  ({ one }) => ({
-    user: one(users, {
-      fields: [learningGoals.userId],
-      references: [users.id],
-    }),
-    community: one(communities, {
-      fields: [learningGoals.communityId],
-      references: [communities.id],
-    }),
+export const learningGoalsRelations = relations(learningGoals, ({ one }) => ({
+  user: one(users, {
+    fields: [learningGoals.userId],
+    references: [users.id],
   }),
-);
+  community: one(communities, {
+    fields: [learningGoals.communityId],
+    references: [communities.id],
+  }),
+}));
 
-export const matchesRelations = relations("matches", ({ one, many }) => ({
+export const matchesRelations = relations(matches, ({ one, many }) => ({
   user1: one(users, {
     fields: [matches.user1Id],
     references: [users.id],
@@ -149,7 +143,7 @@ export const matchesRelations = relations("matches", ({ one, many }) => ({
 }));
 
 export const conversationsRelations = relations(
-  "conversations",
+  conversations,
   ({ one, many }) => ({
     match: one(matches, {
       fields: [conversations.matchId],
@@ -160,7 +154,7 @@ export const conversationsRelations = relations(
   }),
 );
 
-export const messagesRelations = relations("messages", ({ one }) => ({
+export const messagesRelations = relations(messages, ({ one }) => ({
   conversation: one(conversations, {
     fields: [messages.conversationId],
     references: [conversations.id],
@@ -172,7 +166,7 @@ export const messagesRelations = relations("messages", ({ one }) => ({
 }));
 
 export const conversationSummariesRelations = relations(
-  "conversation_summaries",
+  conversationSummaries,
   ({ one }) => ({
     conversation: one(conversations, {
       fields: [conversationSummaries.conversationId],
