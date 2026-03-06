@@ -17,6 +17,7 @@ export const useMatchedConversations = (matchId: string) => {
 
       return await res.json();
     },
+    enabled: !!matchId,
   });
 };
 
@@ -38,6 +39,7 @@ export const useGenerateLatestSummary = (conversationId: string) => {
 
       return await res.json();
     },
+    enabled: !!conversationId,
   });
 };
 
@@ -58,7 +60,7 @@ export const useConversations = (conversationId: string) => {
 
       return await res.json();
     },
-
+    enabled: !!conversationId,
     refetchInterval: 5000,
   });
 };
