@@ -29,7 +29,7 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html data-scroll-behavior="smooth" lang="en">
         <body className={`${outfitFont.className} antialiased`}>
           <QueryProvider>
             <Header isPro={isPro} />
