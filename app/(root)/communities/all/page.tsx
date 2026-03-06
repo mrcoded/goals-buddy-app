@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import Loading from "@/app/loading";
-import { CheckIcon, ChevronLeftIcon, LockIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { CheckIcon, ChevronLeftIcon, LockIcon, Plus } from "lucide-react";
 
 import {
   Card,
@@ -23,6 +24,7 @@ import {
 import { useCurrentUser } from "@/hooks/use-users";
 
 const AllCommunitiesPage = () => {
+  const router = useRouter();
   const { data: user } = useCurrentUser();
   const { mutateAsync: joinCommunity, isPending } = useJoinCommunity();
 
@@ -63,12 +65,22 @@ const AllCommunitiesPage = () => {
 
   return (
     <div>
-      <Link href="/communities">
-        <Button variant={"outline"}>
-          <ChevronLeftIcon className="size-4" />
-          Back to Communities
-        </Button>
-      </Link>
+      <div className="flex justify-between">
+        <Link href="/communities">
+          <Button variant={"outline"}>
+            <ChevronLeftIcon className="size-4" />
+            Back
+          </Button>
+        </Link>
+        {isPro && (
+          <Link href="/communities/create">
+            <Button variant={"outline"}>
+              <Plus className="size-4" />
+              Create a Community
+            </Button>
+          </Link>
+        )}
+      </div>
       <div className="space-y-4 mt-4">
         <h2 className="text-2xl font-bold">Browse Communities</h2>
         {apiError ? (
@@ -76,10 +88,25 @@ const AllCommunitiesPage = () => {
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {allCommunities?.map((community) => (
-              <Card key={community.id} className="p-4">
-                <CardTitle>{community.name}</CardTitle>
+              <Card key={community.id} className="p-4 sm:min-h-48">
+                <CardTitle className="flex justify-between">
+                  <>{community.name}</>
+
+                  {community.createdById === user?.id && (
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      onClick={() =>
+                        router.push(`/communities/${community.id}/edit`)
+                      }
+                    >
+                      Edit
+                    </Button>
+                  )}
+                </CardTitle>
+
                 <CardDescription>{community.description}</CardDescription>
-                <CardFooter className="px-0 mt-2">
+                <CardFooter className="px-0 mt-2 sm:mt-auto">
                   <Button
                     className="w-full"
                     disabled={
@@ -88,7 +115,7 @@ const AllCommunitiesPage = () => {
                     onClick={() => handleJoinCommunity(community.id)}
                   >
                     {showLockIcon && (
-                      <LockIcon className="size-4 teext-muted-foreground" />
+                      <LockIcon className="size-4 text-muted-foreground" />
                     )}{" "}
                     {isJoined(community.id) ? (
                       <>
