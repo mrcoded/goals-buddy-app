@@ -32,3 +32,9 @@ export interface UserCommunityProps {
     updatedAt: string;
   };
 }
+
+export interface PendingMatchProps {
+  acceptMatch: (id: string) => void;
+  pendingMatchesToShow: MatchProps[];
+  acceptMatchPending: boolean;
+}
