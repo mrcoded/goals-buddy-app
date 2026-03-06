@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateAiMatches = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -25,6 +26,8 @@ export const useCreateAiMatches = () => {
       queryClient.invalidateQueries({
         queryKey: ["ai-match", variables.communityId],
       });
+      toast.success("AI matched learning buddies successfully");
+      router.push(`/chat`);
     },
     onError(error) {
       toast.error("Failed to match learning buddy! Try again");
@@ -77,21 +80,3 @@ export const useAllMatches = () => {
     },
   });
 };
-
-// export const usePotentialMatches = () => {
-//   return useQuery({
-//     queryKey: ["ai-match"],
-//     queryFn: async (communityId: string) => {
-//       const res = await client.api.matches.c[":communityId"].matches.$get({
-//         param: {
-//           communityId,
-//         },
-//       });
-
-//       //if response fails
-//       if (!res.ok) throw new Error("Failed to fetch potential matches");
-
-//       return res.json();
-//     },
-//   });
-// };
