@@ -6,7 +6,7 @@ This is a Next.js and TypeScript-based real-time community platform built to sol
 
 To get started with the Slack Clone, follow these steps:
 
-1. Clone the repository: `git clone [https://github.com/mrcoded/goals-buddy.git](https://github.com/mrcoded/goals-buddy.git)`
+1. Clone the repository: `git clone [https://github.com/mrcoded/goals-buddy-app.git](https://github.com/mrcoded/goals-buddy-app.git)`
 2. Install dependencies: `bun install` or `yarn install`
 3. Create a `.env.local` file in the root directory and add the following environment variables:
 
